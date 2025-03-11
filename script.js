@@ -51,17 +51,32 @@ playAudioButton.addEventListener("click", () => {
 nextConsonantButton.addEventListener("click", () => updatePhoneme("consonant"));
 nextVowelButton.addEventListener("click", () => updatePhoneme("vowel"));
 
-// 監聽 Canvas，讓使用者可以手寫
-canvas.addEventListener("mousedown", () => { isDrawing = true; });
-canvas.addEventListener("mouseup", () => { isDrawing = false; ctx.beginPath(); });
-canvas.addEventListener("mousemove", draw);
+// 手寫功能，監聽觸控事件
+canvas.addEventListener("touchstart", startDrawing);
+canvas.addEventListener("touchend", stopDrawing);
+canvas.addEventListener("touchmove", draw);
+
+// 觸控事件函式
+function startDrawing(event) {
+    event.preventDefault(); // 防止滾動頁面
+    isDrawing = true;
+    const touch = event.touches[0]; // 取得觸控點
+    ctx.moveTo(touch.clientX - canvas.offsetLeft, touch.clientY - canvas.offsetTop);
+}
+
+function stopDrawing() {
+    isDrawing = false;
+    ctx.beginPath();
+}
 
 function draw(event) {
     if (!isDrawing) return;
-    ctx.lineTo(event.offsetX, event.offsetY);
+    event.preventDefault(); // 防止滾動頁面
+    const touch = event.touches[0]; // 取得觸控點
+    ctx.lineTo(touch.clientX - canvas.offsetLeft, touch.clientY - canvas.offsetTop);
     ctx.stroke();
     ctx.beginPath();
-    ctx.moveTo(event.offsetX, event.offsetY);
+    ctx.moveTo(touch.clientX - canvas.offsetLeft, touch.clientY - canvas.offsetTop);
 }
 
 // 清除 Canvas
