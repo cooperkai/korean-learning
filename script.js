@@ -57,7 +57,13 @@ playAudioButton.addEventListener("click", () => {
     };
     speechSynthesis.speak(utterance);
     const voices = speechSynthesis.getVoices();
-    logToPage(voices);
+    // 打印每個語音的語言和名稱
+    voices.forEach((voice, index) => {
+        logToPage(`語音 ${index + 1}:`);
+        logToPage(`名稱: ${voice.name}`);
+        logToPage(`語言: ${voice.lang}`);
+        logToPage('--------------------------');
+    });
 });
 
 
