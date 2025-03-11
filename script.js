@@ -39,13 +39,25 @@ function updatePhoneme(type) {
 // 頁面載入時，先顯示一個隨機子音
 updatePhoneme("consonant");
 
+function logToPage(message) {
+    const logElement = document.getElementById('console-log');
+    logElement.innerHTML += message + '<br>';
+}
 // 播放發音（Web Speech API）
 playAudioButton.addEventListener("click", () => {
     const phoneme = phonemeElement.textContent;
     const utterance = new SpeechSynthesisUtterance(phoneme);
     utterance.lang = "ko-KR";
+    
+    utterance.onend = () => {
+        logToPage("語音播放完成！");
+    };
+    utterance.onerror = (event) => {
+        logToPage("語音合成錯誤:" + event.error);
+    };
     speechSynthesis.speak(utterance);
 });
+
 
 // 監聽按鈕點擊，切換子音或母音
 nextConsonantButton.addEventListener("click", () => updatePhoneme("consonant"));
