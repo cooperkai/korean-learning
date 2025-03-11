@@ -56,6 +56,8 @@ playAudioButton.addEventListener("click", () => {
         logToPage("語音合成錯誤:" + event.error);
     };
     speechSynthesis.speak(utterance);
+    const voices = speechSynthesis.getVoices();
+    logToPage(voices);
 });
 
 
