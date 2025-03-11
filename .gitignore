@@ -1,0 +1,17 @@
+# 忽略操作系統生成的文件
+.DS_Store
+Thumbs.db
+
+# 忽略 Node.js 相關檔案（如果你使用 npm）
+node_modules/
+
+# 忽略編譯後的檔案
+/dist/
+/build/
+
+# 忽略 IDE 相關檔案（如果你使用 Visual Studio Code）
+.vscode/
+.idea/
+
+# 忽略環境設定文件（如果使用過環境設定）
+.env
